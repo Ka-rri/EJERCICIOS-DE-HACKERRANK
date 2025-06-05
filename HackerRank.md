@@ -142,6 +142,29 @@
 
 22. The PADS
 
+        SELECT CONCAT(name,"(",LEFT(occupation, 1),")") AS name
+        FROM OCCUPATIONS ORDER BY name;
+        SELECT CONCAT ("There are a total of ", COUNT(*)," ", LOWER(occupation),"s.") AS result
+        FROM OCCUPATIONS
+        GROUP BY occupation
+        ORDER BY COUNT(*) ASC, occupation ASC;
+
+23. Occupations
+
+        SELECT
+            MAX(CASE when Occupation = "Doctor" THEN NAME END) AS Doctor,
+            MAX(CASE when Occupation = "Professor" THEN NAME END) AS Professor,
+            MAX(CASE when Occupation = "Singer" THEN NAME END) AS Singer,
+            MAX(CASE when Occupation = "Actor" THEN NAME END) AS Actor
+            FROM (
+            SELECT Name, Occupation,
+                ROW_NUMBER() OVER(PARTITION BY Occupation ORDER BY Name)AS RowNum 
+                FROM OCCUPATIONS
+            ) AS SubQuery
+            GROUP BY RowNum
+            ORDER BY RowNum;
+
+24. 
 
 
     
